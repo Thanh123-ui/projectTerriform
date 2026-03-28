@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Danh sách lịch hẹn</title>
+  <link rel="stylesheet" href="/public/styles.css" />
+</head>
+<body>
+  <div class="container section">
+    <h1>Danh sách lịch hẹn</h1>
+    <p>
+      <a href="/">Trang chủ</a> |
+      <a href="/logout">Đăng xuất</a>
+    </p>
+
+    <div class="card">
+      <% if (!appointments || appointments.length === 0) { %>
+        <p>Chưa có lịch hẹn nào.</p>
+      <% } else { %>
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Họ tên</th>
+              <th>Liên hệ</th>
+              <th>Bác sĩ/Khoa</th>
+              <th>Ngày</th>
+              <th>Giờ</th>
+              <th>Ghi chú</th>
+              <th>Tạo lúc</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% appointments.forEach(function(item) { %>
+              <tr>
+                <td><%= item.id %></td>
+                <td><%= item.full_name %></td>
+                <td><%= item.contact %></td>
+                <td><%= item.doctor_or_department %></td>
+                <td><%= item.appointment_date ? item.appointment_date.toISOString().split('T')[0] : '' %></td>
+                <td><%= item.appointment_time %></td>
+                <td><%= item.note || '' %></td>
+                <td><%= item.created_at %></td>
+              </tr>
+            <% }) %>
+          </tbody>
+        </table>
+      <% } %>
+    </div>
+  </div>
+</body>
+</html>

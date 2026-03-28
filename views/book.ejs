@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đặt lịch khám</title>
+  <link rel="stylesheet" href="/public/styles.css" />
+</head>
+<body>
+  <div class="container section">
+    <h1>Phiếu đặt lịch khám</h1>
+    <p><a href="/">← Quay về trang chủ</a></p>
+
+    <% if (error) { %>
+      <div class="alert error"><%= error %></div>
+    <% } %>
+
+    <form method="POST" action="/book" class="card form-grid">
+      <label>
+        Họ và tên *
+        <input type="text" name="full_name" value="<%= formData.full_name || '' %>" required />
+      </label>
+
+      <label>
+        Số điện thoại / Email liên hệ *
+        <input type="text" name="contact" value="<%= formData.contact || '' %>" required />
+      </label>
+
+      <label>
+        Bác sĩ hoặc khoa/phòng ban *
+        <input type="text" name="doctor_or_department" value="<%= formData.doctor_or_department || '' %>" required />
+      </label>
+
+      <label>
+        Ngày khám *
+        <input type="date" name="appointment_date" value="<%= formData.appointment_date || '' %>" required />
+      </label>
+
+      <label>
+        Giờ khám *
+        <input type="time" name="appointment_time" value="<%= formData.appointment_time || '' %>" required />
+      </label>
+
+      <label>
+        Ghi chú
+        <textarea name="note" rows="4"><%= formData.note || '' %></textarea>
+      </label>
+
+      <button class="btn" type="submit">Gửi lịch hẹn</button>
+    </form>
+  </div>
+</body>
+</html>

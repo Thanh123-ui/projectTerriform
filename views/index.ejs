@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hệ thống đặt lịch khám</title>
+  <link rel="stylesheet" href="/public/styles.css" />
+</head>
+<body>
+  <header class="navbar">
+    <div class="container">
+      <h1>Hospital Booking</h1>
+      <nav>
+        <a href="/">Trang chủ</a>
+        <a href="/book">Đặt lịch</a>
+        <% if (isAdmin) { %>
+          <a href="/appointments">Danh sách lịch hẹn</a>
+          <a href="/logout">Đăng xuất</a>
+        <% } else { %>
+          <a href="/admin-login">Admin</a>
+        <% } %>
+      </nav>
+    </div>
+  </header>
+
+  <main class="hero">
+    <div class="container hero-content">
+      <div>
+        <h2>Đặt lịch khám nhanh chóng, dễ dàng</h2>
+        <p>
+          Hệ thống hỗ trợ bệnh nhân gửi yêu cầu đặt lịch khám với bác sĩ hoặc khoa/phòng ban mong muốn.
+        </p>
+        <a class="btn" href="/book">Đặt lịch ngay</a>
+      </div>
+    </div>
+  </main>
+
+  <section class="container section">
+    <% if (success) { %>
+      <div class="alert success"><%= success %></div>
+    <% } %>
+
+    <h3>Ưu điểm</h3>
+    <ul>
+      <li>Giao diện đơn giản, dễ dùng</li>
+      <li>Lưu lịch hẹn vào MySQL RDS</li>
+      <li>Quản trị viên đăng nhập để xem danh sách lịch hẹn</li>
+    </ul>
+  </section>
+</body>
+</html>

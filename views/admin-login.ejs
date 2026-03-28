@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Đăng nhập quản trị</title>
+  <link rel="stylesheet" href="/public/styles.css" />
+</head>
+<body>
+  <div class="container section">
+    <h1>Đăng nhập quản trị</h1>
+    <p><a href="/">← Quay về trang chủ</a></p>
+
+    <% if (error) { %>
+      <div class="alert error"><%= error %></div>
+    <% } %>
+
+    <form method="POST" action="/admin-login" class="card form-grid">
+      <label>
+        Tên đăng nhập
+        <input type="text" name="username" required />
+      </label>
+
+      <label>
+        Mật khẩu
+        <input type="password" name="password" required />
+      </label>
+
+      <button class="btn" type="submit">Đăng nhập</button>
+    </form>
+  </div>
+</body>
+</html>app
