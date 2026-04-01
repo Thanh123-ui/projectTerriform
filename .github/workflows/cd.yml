@@ -10,7 +10,7 @@ jobs:
 
     defaults:
       run:
-        working-directory: ./terraform
+        working-directory: .
 
     env:
       AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
