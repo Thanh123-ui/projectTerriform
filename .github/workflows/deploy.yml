@@ -1,0 +1,46 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy via SSH
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code (optional)
+        uses: actions/checkout@v4
+
+      - name: Setup SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -p ${{ secrets.EC2_PORT }} -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Deploy to EC2
+        run: |
+          ssh -p ${{ secrets.EC2_PORT }} ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            set -e
+
+            echo "===> Go to app folder"
+            cd /opt/hospital-booking
+
+            echo "===> Pull latest code"
+            git fetch --all
+            git reset --hard origin/main
+
+            echo "===> Install dependencies"
+            npm install --production
+
+            echo "===> Restart service"
+            sudo systemctl restart hospital-booking
+
+            echo "===> Check status"
+            sudo systemctl status hospital-booking --no-pager
+
+            echo "===> Deploy done"
+          EOF
