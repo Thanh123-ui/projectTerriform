@@ -3,51 +3,61 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Danh sách lịch hẹn</title>
-  <link rel="stylesheet" href="/public/styles.css" />
+  <title>Danh sách lịch hẹn | MediCare Clinic</title>
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <div class="container section">
-    <h1>Danh sách lịch hẹn</h1>
-    <p>
-      <a href="/">Trang chủ</a> |
-      <a href="/logout">Đăng xuất</a>
-    </p>
+  <%- include('partials/header') %>
 
-    <div class="card">
-      <% if (!appointments || appointments.length === 0) { %>
-        <p>Chưa có lịch hẹn nào.</p>
-      <% } else { %>
-        <table>
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Họ tên</th>
-              <th>Liên hệ</th>
-              <th>Bác sĩ/Khoa</th>
-              <th>Ngày</th>
-              <th>Giờ</th>
-              <th>Ghi chú</th>
-              <th>Tạo lúc</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% appointments.forEach(function(item) { %>
+  <main class="page">
+    <div class="container">
+      <div class="page-header page-header-row">
+        <div>
+          <span class="section-kicker">Quản lý lịch hẹn</span>
+          <h1>Danh sách lịch hẹn</h1>
+          <p>Theo dõi thông tin bệnh nhân và lịch khám một cách trực quan.</p>
+        </div>
+
+        <a href="/book" class="btn btn-primary">Tạo lịch mới</a>
+      </div>
+
+      <div class="table-card">
+        <div class="table-wrap">
+          <table class="appointment-table">
+            <thead>
               <tr>
-                <td><%= item.id %></td>
-                <td><%= item.full_name %></td>
-                <td><%= item.contact %></td>
-                <td><%= item.doctor_or_department %></td>
-                <td><%= item.appointment_date ? item.appointment_date.toISOString().split('T')[0] : '' %></td>
-                <td><%= item.appointment_time %></td>
-                <td><%= item.note || '' %></td>
-                <td><%= item.created_at %></td>
+                <th>Họ tên</th>
+                <th>SĐT</th>
+                <th>Email</th>
+                <th>Ngày</th>
+                <th>Giờ</th>
+                <th>Lý do khám</th>
               </tr>
-            <% }) %>
-          </tbody>
-        </table>
-      <% } %>
+            </thead>
+            <tbody>
+              <% if (appointments && appointments.length > 0) { %>
+                <% appointments.forEach(item => { %>
+                  <tr>
+                    <td><strong><%= item.name %></strong></td>
+                    <td><%= item.phone %></td>
+                    <td><%= item.email || '-' %></td>
+                    <td><%= item.date %></td>
+                    <td><%= item.time %></td>
+                    <td><%= item.reason || '-' %></td>
+                  </tr>
+                <% }) %>
+              <% } else { %>
+                <tr>
+                  <td colspan="6" class="empty">Chưa có lịch hẹn nào.</td>
+                </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
+      </div>
     </div>
-  </div>
+  </main>
+
+  <%- include('partials/footer') %>
 </body>
 </html>

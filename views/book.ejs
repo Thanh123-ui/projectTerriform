@@ -3,51 +3,123 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Đặt lịch khám</title>
-  <link rel="stylesheet" href="/public/styles.css" />
+  <title>Đặt lịch khám | MediCare Clinic</title>
+  <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
-  <div class="container section">
-    <h1>Phiếu đặt lịch khám</h1>
-    <p><a href="/">← Quay về trang chủ</a></p>
+  <%- include('partials/header') %>
 
-    <% if (error) { %>
-      <div class="alert error"><%= error %></div>
-    <% } %>
+  <main class="page">
+    <div class="container">
+      <div class="page-header">
+        <span class="section-kicker">Đặt lịch khám</span>
+        <h1>Điền thông tin đặt lịch</h1>
+        <p>Vui lòng nhập đầy đủ thông tin để bộ phận tiếp nhận xác nhận lịch hẹn sớm nhất.</p>
+      </div>
 
-    <form method="POST" action="/book" class="card form-grid">
-      <label>
-        Họ và tên *
-        <input type="text" name="full_name" value="<%= formData.full_name || '' %>" required />
-      </label>
+      <% if (successMessage) { %>
+        <div class="alert alert-success"><%= successMessage %></div>
+      <% } %>
 
-      <label>
-        Số điện thoại / Email liên hệ *
-        <input type="text" name="contact" value="<%= formData.contact || '' %>" required />
-      </label>
+      <% if (errorMessage) { %>
+        <div class="alert alert-error"><%= errorMessage %></div>
+      <% } %>
 
-      <label>
-        Bác sĩ hoặc khoa/phòng ban *
-        <input type="text" name="doctor_or_department" value="<%= formData.doctor_or_department || '' %>" required />
-      </label>
+      <div class="booking-layout">
+        <div class="form-card">
+          <form method="POST" action="/book" class="booking-form">
+            <div class="form-group full">
+              <label for="name">Họ và tên</label>
+              <input
+                type="text"
+                id="name"
+                name="name"
+                placeholder="Nhập họ và tên"
+                value="<%= formData?.name || '' %>"
+                required
+              />
+            </div>
 
-      <label>
-        Ngày khám *
-        <input type="date" name="appointment_date" value="<%= formData.appointment_date || '' %>" required />
-      </label>
+            <div class="form-group">
+              <label for="phone">Số điện thoại</label>
+              <input
+                type="text"
+                id="phone"
+                name="phone"
+                placeholder="Nhập số điện thoại"
+                value="<%= formData?.phone || '' %>"
+                required
+              />
+            </div>
 
-      <label>
-        Giờ khám *
-        <input type="time" name="appointment_time" value="<%= formData.appointment_time || '' %>" required />
-      </label>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                placeholder="Nhập email"
+                value="<%= formData?.email || '' %>"
+              />
+            </div>
 
-      <label>
-        Ghi chú
-        <textarea name="note" rows="4"><%= formData.note || '' %></textarea>
-      </label>
+            <div class="form-group">
+              <label for="date">Ngày khám</label>
+              <input
+                type="date"
+                id="date"
+                name="date"
+                value="<%= formData?.date || '' %>"
+                required
+              />
+            </div>
 
-      <button class="btn" type="submit">Gửi lịch hẹn</button>
-    </form>
-  </div>
+            <div class="form-group">
+              <label for="time">Giờ khám</label>
+              <input
+                type="time"
+                id="time"
+                name="time"
+                value="<%= formData?.time || '' %>"
+                required
+              />
+            </div>
+
+            <div class="form-group full">
+              <label for="reason">Lý do khám</label>
+              <textarea
+                id="reason"
+                name="reason"
+                rows="5"
+                placeholder="Mô tả ngắn triệu chứng hoặc nhu cầu khám"
+              ><%= formData?.reason || '' %></textarea>
+            </div>
+
+            <div class="form-actions full">
+              <button type="submit" class="btn btn-primary">Gửi yêu cầu đặt lịch</button>
+              <a href="/" class="btn btn-light">Quay về trang chủ</a>
+            </div>
+          </form>
+        </div>
+
+        <aside class="side-card">
+          <h3>Thông tin hỗ trợ</h3>
+          <ul class="side-list">
+            <li>Điền đúng số điện thoại để xác nhận lịch.</li>
+            <li>Nên đến trước giờ hẹn từ 10 - 15 phút.</li>
+            <li>Trong trường hợp cấp cứu, vui lòng liên hệ hotline.</li>
+            <li>Hệ thống sẽ ưu tiên lịch còn trống gần nhất.</li>
+          </ul>
+
+          <div class="support-box">
+            <span>Hotline hỗ trợ</span>
+            <strong>1900 1234</strong>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
 </body>
 </html>

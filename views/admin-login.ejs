@@ -3,31 +3,56 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Đăng nhập quản trị</title>
-  <link rel="stylesheet" href="/public/styles.css" />
+  <title>Đăng nhập Admin | MediCare Clinic</title>
+  <link rel="stylesheet" href="/styles.css" />
 </head>
-<body>
-  <div class="container section">
-    <h1>Đăng nhập quản trị</h1>
-    <p><a href="/">← Quay về trang chủ</a></p>
+<body class="auth-page">
+  <main class="auth-wrapper">
+    <div class="login-card">
+      <div class="auth-brand">
+        <span class="logo-icon">+</span>
+        <span class="logo-text">MediCare Clinic</span>
+      </div>
 
-    <% if (error) { %>
-      <div class="alert error"><%= error %></div>
-    <% } %>
+      <div class="auth-header">
+        <h1>Đăng nhập quản trị</h1>
+        <p>Vui lòng nhập thông tin tài khoản để truy cập hệ thống.</p>
+      </div>
 
-    <form method="POST" action="/admin-login" class="card form-grid">
-      <label>
-        Tên đăng nhập
-        <input type="text" name="username" required />
-      </label>
+      <% if (errorMessage) { %>
+        <div class="alert alert-error"><%= errorMessage %></div>
+      <% } %>
 
-      <label>
-        Mật khẩu
-        <input type="password" name="password" required />
-      </label>
+      <form method="POST" action="/admin-login" class="auth-form">
+        <div class="form-group">
+          <label for="username">Tên đăng nhập</label>
+          <input
+            type="text"
+            id="username"
+            name="username"
+            placeholder="Nhập tên đăng nhập"
+            required
+          />
+        </div>
 
-      <button class="btn" type="submit">Đăng nhập</button>
-    </form>
-  </div>
+        <div class="form-group">
+          <label for="password">Mật khẩu</label>
+          <input
+            type="password"
+            id="password"
+            name="password"
+            placeholder="Nhập mật khẩu"
+            required
+          />
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Đăng nhập</button>
+      </form>
+
+      <div class="auth-footer">
+        <a href="/">Quay về trang chủ</a>
+      </div>
+    </div>
+  </main>
 </body>
-</html>app
+</html>
