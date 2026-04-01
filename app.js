@@ -108,7 +108,7 @@ app.post("/book", async (req, res) => {
     ) {
       return res.render("book", {
         successMessage: null,
-        errorMessage: "Vui lòng nhập đầy đủ các trường bắt buộc.",
+        errorMessage: "ssssss",
         formData: req.body
       });
     }
