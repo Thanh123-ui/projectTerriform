@@ -16,13 +16,11 @@ jobs:
         run: |
           set -e
           mkdir -p ~/.ssh
-          cat << 'KEY' > ~/.ssh/id_ed25519
-${{ secrets.EC2_SSH_KEY }}
-KEY
+          printf '%s\n' "${{ secrets.EC2_SSH_KEY }}" > ~/.ssh/id_ed25519
           chmod 600 ~/.ssh/id_ed25519
           ssh-keyscan -p "${{ secrets.EC2_PORT }}" -H "${{ secrets.EC2_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Test SSH
+      - name: Test SSH connection
         shell: bash
         run: |
           set -e
@@ -42,11 +40,22 @@ KEY
             -o StrictHostKeyChecking=yes \
             -p "${{ secrets.EC2_PORT }}" \
             "${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}" << 'EOF'
-            set -e
-            cd /opt/hospital-booking
-            git fetch --all
-            git reset --hard origin/main
-            npm install --production
-            sudo systemctl restart hospital-booking
-            sudo systemctl status hospital-booking --no-pager
+          set -e
+          echo "===> Go to app folder"
+          cd /opt/hospital-booking
+
+          echo "===> Pull latest code"
+          git fetch --all
+          git reset --hard origin/main
+
+          echo "===> Install dependencies"
+          npm install --production
+
+          echo "===> Restart service"
+          sudo systemctl restart hospital-booking
+
+          echo "===> Check status"
+          sudo systemctl status hospital-booking --no-pager
+
+          echo "===> Deploy done"
           EOF
